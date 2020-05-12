@@ -12,8 +12,10 @@ class ProjectsController extends Controller
         // validate
         $attributes = request()->validate([
             'title'       => 'required',
-            'description' => 'required'
+            'description' => 'required',
         ]);
+
+        $attributes['owner_id'] = auth()->id();
 
         // persist
         Project::create($attributes);
@@ -29,10 +31,8 @@ class ProjectsController extends Controller
         return view('projects.index', compact('projects'));
     }
 
-    public function show()
+    public function show(Project $project)
     {
-        $project = Project::findOrfail(request('project'));
-
         return view('projects.show', compact('project'));
     }
 }
