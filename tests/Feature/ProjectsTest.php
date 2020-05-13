@@ -11,7 +11,7 @@ class ProjectsTest extends TestCase
     use WithFaker, RefreshDatabase;
     
     /** @test */
-    public function only_authenticated_users_can_creat_projects()
+    public function guests_cannot_view_projects_creat_projects()
     {
         $attributes = factory('App\Project')->raw();
     
