@@ -86,8 +86,8 @@ module.exports = {
       },
       blue: {
         100: '#ebf8ff',
-        200: '#bee3f8',
-        300: '#90cdf4',
+        200: '#8ae2fe',
+        300: '#74cdff',
         400: '#63b3ed',
         500: '#4299e1',
         600: '#3182ce',
@@ -191,7 +191,7 @@ module.exports = {
     boxShadow: {
       xs: '0 0 0 1px rgba(0, 0, 0, 0.05)',
       sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-      default: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+      default: '0 0 5px 0 rgba(0, 0, 0, 0.08)',
       md: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
       lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
       xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
