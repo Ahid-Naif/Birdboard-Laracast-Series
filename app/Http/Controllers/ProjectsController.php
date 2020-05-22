@@ -15,10 +15,10 @@ class ProjectsController extends Controller
             'description' => 'required',
         ]);
 
-        auth()->user()->projects()->create($attributes);
+        $projects = auth()->user()->projects()->create($attributes);
 
         // redirect
-        return redirect('/projects');
+        return redirect($projects->path());
     }
 
     public function index()
