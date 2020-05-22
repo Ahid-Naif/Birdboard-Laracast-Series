@@ -26,7 +26,7 @@ class ProjectsTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->actingAs(factory('App\User')->create());
+        $this->signIn();
 
         $this->get('/projects/create')->assertStatus(200);
 
@@ -39,27 +39,27 @@ class ProjectsTest extends TestCase
 
         $this->assertDatabaseHas('projects', $attributes);
 
-        $this->get('/projects')->assertSee($attributes['title']);
+        $this->get('/projects')->assertSee(str_limit($attributes['title'], 15));
     }
 
     /** @test */
     public function a_user_can_view_their_project()
     {
-        $this->be(factory('App\User')->create());
+        $this->signIn();
 
         $this->withoutExceptionHandling();
 
         $project = factory('App\Project')->create(['owner_id' => auth()->id()]);
 
         $this->get('/projects/'. $project->id)
-            ->assertSee($project->title)
-            ->assertSee($project->description);
+            ->assertSee(str_limit($project->title, 15))
+            ->assertSee(str_limit($project->description, 70));
     }
 
      /** @test */
      public function an_authenticated_user_cannot_view_projects_of_others()
      {
-        $this->be(factory('App\User')->create());
+        $this->signIn();
 
         $project = factory('App\Project')->create();
 
@@ -69,7 +69,7 @@ class ProjectsTest extends TestCase
     /** @test */
     public function a_project_requires_a_title()
     {
-        $this->actingAs(factory('App\User')->create());
+        $this->signIn();
 
         $attributes = factory('App\Project')->raw(['title' => '']);
 
@@ -79,7 +79,7 @@ class ProjectsTest extends TestCase
     /** @test */
     public function a_project_requires_a_description()
     {
-        $this->actingAs(factory('App\User')->create());
+        $this->signIn();
 
         $attributes = factory('App\Project')->raw(['description' => '']);
 
