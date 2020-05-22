@@ -24,7 +24,18 @@
                     
                     @forelse ($project->tasks as $task)
                     <div class="bg-white p-3 rounded-lg shadow-sm mb-3">
-                        {{ $task->body }}
+                        <form method="POST" action="{{ $project->path() . '/tasks/' . $task->id }}">
+                            @method('PATCH')
+                            @csrf
+
+                            <div class="flex">
+                                <input name="body" value="{{ $task->body }}"
+                                    class="w-full">
+                            
+                                <input name="completed" type="checkbox"
+                                    onChange="this.form.submit()">
+                            </div>
+                        </form>
                     </div>
                     @empty
                         <div>No tasks added yet!</div>
