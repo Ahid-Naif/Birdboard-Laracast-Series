@@ -30,10 +30,11 @@
 
                             <div class="flex">
                                 <input name="body" value="{{ $task->body }}"
-                                    class="w-full">
+                                    class="w-full {{ $task->completed ? 'text-gray-500' : '' }}">
                             
                                 <input name="completed" type="checkbox"
-                                    onChange="this.form.submit()">
+                                    onChange="this.form.submit()"
+                                    {{ $task->completed ? 'checked' : '' }}>
                             </div>
                         </form>
                     </div>
