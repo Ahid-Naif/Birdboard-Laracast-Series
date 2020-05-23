@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Project;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Facades\Tests\Setup\ProjectFactory;
 use Tests\TestCase;
 
 class ProjectsTest extends TestCase
@@ -25,8 +26,6 @@ class ProjectsTest extends TestCase
     /** @test */
     public function a_user_can_create_a_project()
     {
-        $this->withoutExceptionHandling();
-
         $this->signIn();
 
         $this->get('/projects/create')->assertStatus(200);
@@ -42,19 +41,15 @@ class ProjectsTest extends TestCase
 
         $response->assertRedirect($project->path());
 
-        $this->assertDatabaseHas('projects', $attributes);
-
-        $this->get('/projects')->assertSee(str_limit($attributes['title'], 15));
+        $this->get('/projects')
+            ->assertSee(str_limit($attributes['title'], 15))
+            ->assertSee(str_limit($attributes['description'], 70));
     }
 
     /** @test */
     public function a_user_can_view_their_project()
     {
-        $this->signIn();
-
-        $this->withoutExceptionHandling();
-
-        $project = factory('App\Project')->create(['owner_id' => auth()->id()]);
+        $project = ProjectFactory::ownedBy($this->signIn())->create();
 
         $this->get('/projects/'. $project->id)
             ->assertSee(str_limit($project->title, 15))
