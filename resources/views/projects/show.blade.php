@@ -24,7 +24,7 @@
                     
                     @forelse ($project->tasks as $task)
                     <div class="bg-white p-3 rounded-lg shadow-sm mb-3">
-                        <form method="POST" action="{{ $project->path() . '/tasks/' . $task->id }}">
+                        <form method="POST" action="{{ $task->path() }}">
                             @method('PATCH')
                             @csrf
 
