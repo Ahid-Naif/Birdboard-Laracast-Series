@@ -8,11 +8,11 @@
                    My Projects</a> / {{ $project->title }}
             </p>
 
-            <a href="/projects/create" 
+            <a href="{{ $project->path() . '/edit' }}" 
             class="bg-blue-300 no-underline text-white 
                 rounded-lg text-sm py-2 px-3"
             style="box-shadow: 0 2px 7px #b0eaff">
-            New Project</a>
+            Edit Project</a>
         </div>
     </header>
     
@@ -28,11 +28,17 @@
                             @method('PATCH')
                             @csrf
 
-                            <div class="flex">
-                                <input name="body" value="{{ $task->body }}"
-                                    class="w-full {{ $task->completed ? 'text-gray-500' : '' }}">
+                            <div class="flex items-center">
+                                <input 
+                                    name="body" 
+                                    value="{{ $task->body }}"
+                                    class="text-default bg-card w-full 
+                                    {{ $task->completed ? 'text-gray-500' : '' }}"
+                                >
                             
-                                <input name="completed" type="checkbox"
+                                <input 
+                                    name="completed"
+                                    type="checkbox"
                                     onChange="this.form.submit()"
                                     {{ $task->completed ? 'checked' : '' }}>
                             </div>
