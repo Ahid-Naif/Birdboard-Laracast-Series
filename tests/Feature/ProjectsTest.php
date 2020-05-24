@@ -20,6 +20,7 @@ class ProjectsTest extends TestCase
         $this->get('/projects')->assertRedirect('login');
         $this->get('/projects/create')->assertRedirect('login');
         $this->get($project->path())->assertRedirect('login');
+        $this->get($project->path() . '/edit')->assertRedirect('login');
         $this->post('/projects', $project->toArray())->assertRedirect('login');
     }
 
@@ -44,6 +45,19 @@ class ProjectsTest extends TestCase
         $this->get('/projects')
             ->assertSee(str_limit($attributes['title'], 15))
             ->assertSee(str_limit($attributes['description'], 70));
+    }
+
+    /** @test */
+    public function a_user_can_update_a_project()
+    {
+        $project = ProjectFactory::ownedBy($this->signIn())->create();
+
+        $this->patch($project->path(), $attributes = ['title' => 'changed', 'description' => 'changed'])
+            ->assertRedirect($project->path());
+
+        $this->get($project->path() . '/edit')->assertStatus(200);
+        
+        $this->assertDatabaseHas('projects', $attributes);
     }
 
     /** @test */
